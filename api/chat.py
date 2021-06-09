@@ -4,7 +4,7 @@ from rest_framework.decorators import api_view
 
 from user.models import User
 from .decorators import session_check
-from logic.chat import get_chat, add_message, make_chat, get_file, get_chat_list
+from logic.chat import get_chat, add_message, make_chat, get_file, get_chat_list, set_chat_checked
 
 
 @api_view(['POST'])
@@ -15,8 +15,10 @@ def api_chat_list(request, phone):
 
 @api_view(['POST'])
 @session_check
-def api_check(request, phone=None):
-    pass
+def api_check(request, phone):
+    chats = User.objects.get(phone=phone).chatlist_set.filter(check=False)
+    data = list(map(lambda x: x.chat.pk, chats))
+    return {'info': 'all_ok', 'data': data}
 
 
 @api_view(['POST'])
@@ -26,8 +28,9 @@ def api_create_chat(request, phone):
     if not isinstance(phones, list):
         return JsonResponse({'info':'unread_phones'})
     phones.append(phone)
-    pk = make_chat(phones)
-    return JsonResponse({'info': 'all_ok', 'chat_id': pk})
+    chat_id = make_chat(phones)
+    set_chat_checked(chat_id, phone, True)
+    return JsonResponse({'info': 'all_ok', 'chat_id': chat_id})
 
 
 
@@ -36,8 +39,9 @@ def api_create_chat(request, phone):
 @session_check
 def api_get_chat(request, chat_id, phone):
     if check_chat(chat_id, phone):
-        return JsonResponse({'info':'unknown_chat', 'path': 'chat.main'})
+        return JsonResponse({'info':'unknown_chat'})
     chat = get_chat(chat_id)
+    set_chat_checked(chat_id, phone, True)
     return JsonResponse({'info':'all_ok', 'chat':chat})
 
 
@@ -45,10 +49,14 @@ def api_get_chat(request, chat_id, phone):
 @session_check
 def api_send_message(request, chat_id, phone):
     if check_chat(chat_id, phone):
-        return JsonResponse({'info':'unknown_chat', 'path': 'chat.main'})
+        return JsonResponse({'info':'unknown_chat'})
     text = request.POST.get('message', '')
+    if not isinstance(text, str):
+        return JsonResponse({'info': 'unknown_message_type'})
     file = request.FILES.get('file')
     file_type = request.POST.get('file_type')
+    if file_type not in ['img', 'audio']:
+        return JsonResponse({'info': 'inknown_file_type'})
     if text == '' and (file or file_type):
         return JsonResponse({'info':'null_text_and_file'})
     add_message(chat_id, phone, text, file, file_type)

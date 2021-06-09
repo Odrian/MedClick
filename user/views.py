@@ -31,7 +31,8 @@ def post_phone(request):
     if resp[0] == 'all_ok':
         reg = Register.objects.filter(phone=tele_phone)
         if len(reg) == 0:
-            Register(phone=tele_phone).save()
+            resp = ['unknown_user', 'auth.phone']
+            #Register(phone=tele_phone).save()
         else:
             reg = reg[0]
             reg.time = now()
