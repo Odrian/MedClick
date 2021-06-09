@@ -8,6 +8,11 @@ from chat.models import TextChat
 from user.models import User
 
 
+def get_chat_list(phone):
+    chat_list = User.objects.get(phone=phone).textchat_set.all()
+    return list(map(lambda x: x.id, chat_list))
+
+
 def get_chat(chat_id):
     path = os.path.join(MEDIA_ROOT, 'chats', str(chat_id), 'data.json')
     with open(path, encoding='utf-8') as file:

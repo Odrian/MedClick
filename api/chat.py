@@ -4,15 +4,13 @@ from rest_framework.decorators import api_view
 
 from user.models import User
 from .decorators import session_check
-from logic.chat import get_chat, add_message, make_chat, get_file
+from logic.chat import get_chat, add_message, make_chat, get_file, get_chat_list
 
 
 @api_view(['POST'])
 @session_check
 def api_chat_list(request, phone):
-    chat_list = User.objects.get(phone=phone).textchat_set.all()
-    data = list(map(lambda x: x.id, chat_list))
-    return JsonResponse({'info': 'all_ok', 'data': data})
+    return JsonResponse({'info': 'all_ok', 'data': get_chat_list(phone)})
 
 
 @api_view(['POST'])

@@ -43,7 +43,7 @@ def api_all_doctors(request, phone):
 
 @api_view(['POST'])
 @session_check
-def api_get_info(request, phone):
+def api_get_doctor_info(request, phone):
     data = Doctor.objects.filter(user_id=request.POST.get('dortor_id'))
     if len(data) == 0:
         return JsonResponse({'info': 'unknown_doctor'})
@@ -84,7 +84,42 @@ def api_edit_self(request, phone):
     user.save()
 
     if user.is_doctor:
-        pass
+        doctor = user.doctor
+
+        cost = request.POST.get('cost')
+        if isinstance(cost, int):
+            if 0 <= cost <= 10000:
+                doctor.cost = cost
+
+        experience = request.POST.get('experience')
+        if isinstance(experience, str):
+            doctor.experience = experience
+
+        service_types = request.POST.get('service_types')
+        if isinstance(service_types, str):
+            doctor.service_types = service_types
+
+        work_time = request.POST.get('work_time')
+        if isinstance(work_time, str):
+            doctor.work_time = work_time
+
+        educations = request.POST.get('educations')
+        if isinstance(educations, str):
+            doctor.educations = educations
+
+        specifications = request.POST.get('specifications')
+        if isinstance(specifications, list):
+            doctor.specifications.clear()
+            for pk in specifications:
+                if isinstance(pk, int):
+                    if len(Specialization.objects.filter(pk=pk)) == 1:
+                        doctor.specifications.add(pk)
+
+        extra_field = request.POST.get('extra_field')
+        if isinstance(extra_field, str):
+            doctor.experience = extra_field
+
+        doctor.save()
     else:
         polis = request.POST.get('polis')
         if isinstance(polis, str):
@@ -98,7 +133,7 @@ def api_edit_self(request, phone):
 urlpatterns = [
     path('get_jops/', api_all_jops),
     path('get_doctors/', api_all_doctors),
-    path('<int:doctor_id>/', api_get_info),
+    path('<int:doctor_id>/', api_get_doctor_info),
     path('self/', api_get_self),
     path('self/edit/', api_edit_self),
 ]
