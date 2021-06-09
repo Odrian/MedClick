@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>MedClick</title>
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+</head>
+<body>
+<form action="{% url 'auth.post_phone' %}" method="post">
+    {% csrf_token %}
+    <input name="phone" type="number">
+    {% comment %}
+    <div class="g-recaptcha" data-sitekey="6LeUOOgaAAAAACYJF_mK10z-2RKMe9JeR5TRB5ZW"></div>
+    {% endcomment %}
+    <button type="submit">Вход</button>
+</form>
+</body>
+</html>

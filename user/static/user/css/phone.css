@@ -1,0 +1,131 @@
+* {
+   padding: 0;
+   margin: 0;
+   border: 0;}
+*,*:before,*:after {
+   -webkit-box-sizing: border-box;
+   -moz-box-sizing: border-box;
+   box-sizing: border-box;}
+:focus,:active {outline: none;}
+a:focus,a:active {outline: none;}
+nav,footer,header,aside {display: block;}
+html,body {
+   height: 100%;
+   width: 100%;
+   font-size: 100%;
+   line-height: 1;
+   font-size: 14px;
+   -ms-text-size-adjust: 100%;
+   -moz-text-size-adjust: 100%;
+   -webkit-text-size-adjust: 100%;}
+input,button,textarea {font-family: inherit;}
+input::-ms-clear {display: none;}
+button {cursor: pointer;}
+button::-moz-focus-inner {padding: 0;border: 0;}
+a,a:visited {text-decoration: none;}
+a:hover {text-decoration: none;}
+ul li {list-style: none;}
+img {vertical-align: top;}
+h1,h2,h3,h4,h5,h6 {font-weight: 400;}
+/*----------*/
+
+.num>*, .submitB>*, .documents {
+   font-family: url("../../fonts/Manrope-VariableFont_wght.ttf");
+}
+.title, .some {
+   font-family: url("../../fonts/Bellota-Regular.ttf");
+}
+body {
+   background: url("../../img/background.png") no-repeat 0 0/cover;
+   overflow: hidden;
+}
+.main {
+   width: 60vh;
+   height: 70vh;
+   margin: 15vh auto 0;
+   border-radius: 5vh;
+   padding: 5vh 8vh 0px;
+   background: rgba(255, 255, 255, 0.9);
+   backdrop-filter: blur(15px);
+}
+
+.title {
+   font-weight: bold;
+   font-size: 7vh;
+   text-align: center;
+   color: #000000;
+}
+
+.some {
+   text-align: center;
+   font-size: 2.8vh;
+   color: #000000;
+   margin: 3.5vh 0;
+}
+
+.num1, .num2 {
+   font-size: 2.8vh;
+   resize: none;
+   background: rgba(0, 0, 0, 0);
+   height: 2.5vh;
+}
+
+.num1B, .num2B {
+   display: inline-block;
+   height: 6vh;
+   padding: 1vh 0;
+   background: #FFFFFF;
+   box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.05);
+   border-radius: 47px;
+}
+.num1B {
+   width: 8vh;
+   text-align: center;
+}
+.num2B {
+   padding: 1.4vh 2vh 0;
+   width: 35vh;
+}
+
+.submitB {
+   float: right;
+   width: 28vh;
+   height: 8.6%;
+   background: #169E96;
+   box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
+   border-radius: 18px;
+   margin: 3vh 0 0;
+}
+
+.submit {
+   font-size: 20px;
+   color: #FFFFFF;
+   background: rgba(0, 0, 0, 0);
+   text-align: center;
+   width: 100%;
+   height: 100%;
+}
+
+.mail {
+   padding: 0 .5vh 0 0;
+   height: 3vh;
+}
+
+.next {
+   color: #FFFFFF;
+   background: #000000;
+   box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
+   border-radius: 30px;
+   font-size: 24px;
+}
+
+.documents {
+   position: absolute;
+   bottom: 3vh;
+   width: 44vh;
+   font-size: 1.8vh;
+   margin: 0 0 2vh;
+   line-height: 2.4vh;
+   text-align: center;
+   color: rgba(0, 0, 0, 0.8);
+}

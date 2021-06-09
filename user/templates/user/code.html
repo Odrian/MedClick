@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>MedClick</title>
+</head>
+<body>
+<form action="{% url 'auth.post_code' %}" method="post">
+    {% csrf_token %}
+    <input name="code" type="number">
+    <button type="submit">Ввести код</button>
+    {% if message %}
+        <div>
+            {{message}}
+        </div>
+    {% endif %}
+
+</form>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<title>MedClick</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="/static/index/css/index.css">
+</head>
+<body>
+	<div class="up">
+		<form method="get" action="{% url 'auth.phone' %}">
+			<div class="upLeft">
+				<span class="upLeftI">
+					<img src="/static/index/img/icon_curs.png" alt="" class="icon">
+				</span>
+				<span class="upLeftT">МедКлик</span>
+			</div>
+			<button class="upRight">
+				<img src="/static/index/img/login.svg" alt="" class="login">
+				<span class="upRightT">Войти</span>
+			</button>
+		</form>
+	</div>
+	<div class="main">
+		<div class="text">
+			<div class="text1">Быстрые и удобные консультации с врачами</div>
+			<div class="text2">Получайте онлайн-консультации от лечащих врачей вашей поликлиники, прямо в вашем смартфоне  или компьютре, не выходя из дома</div>
+			<form method="get" action="{% url 'auth.phone' %}">
+				<button class="next">Подробнее</button>
+			</form>
+		</div>
+		<span class="hangBox">
+			<img src="/static/index/img/hang.png" alt="" class="hang">
+		</span>
+	</div>
+</body>
+</html>

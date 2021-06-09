@@ -1,0 +1,116 @@
+* {
+   padding: 0;
+   margin: 0;
+   border: 0;}
+*,*:before,*:after {
+   -webkit-box-sizing: border-box;
+   -moz-box-sizing: border-box;
+   box-sizing: border-box;}
+:focus,:active {outline: none;}
+a:focus,a:active {outline: none;}
+nav,footer,header,aside {display: block;}
+html,body {
+   height: 100%;
+   width: 100%;
+   font-size: 100%;
+   line-height: 1;
+   font-size: 14px;
+   -ms-text-size-adjust: 100%;
+   -moz-text-size-adjust: 100%;
+   -webkit-text-size-adjust: 100%;}
+input,button,textarea {font-family: inherit;}
+input::-ms-clear {display: none;}
+button {cursor: pointer;}
+button::-moz-focus-inner {padding: 0;border: 0;}
+a,a:visited {text-decoration: none;}
+a:hover {text-decoration: none;}
+ul li {list-style: none;}
+img {vertical-align: top;}
+h1,h2,h3,h4,h5,h6 {font-weight: 400;}
+/*----------*/
+
+@font-face {
+  font-family: Manrope;
+  src: url("../fonts/Manrope-VariableFont_wght.ttf");
+}* {font-family: Manrope;}
+
+body {
+   padding: 2vh 28vh 0;
+   overflow-y: hidden;
+}
+
+.up {min-width: 100vh;}
+.upLeft {display: inline-block;}
+.upLeftT {
+   font-size: 6vh;
+   display: inline-block;
+   margin: 2vh 0 0 1vh;
+   text-align: center;
+   color: #19D1DE;
+}
+.upRight {
+   display: inline-block;
+   float: right;
+   margin: 2vh 0 0 0;
+   background: #E3F8FA;
+   border-radius: 15px;
+   width: 20vh;
+   height: 7vh;
+}
+.login {
+   height: 4vh;
+   margin-right: 1vh;
+   vertical-align: middle;
+}
+.upRightT {
+   display: inline-block;
+   font-size: 2.5vh;
+   margin: 0vh 0 0 0;
+}
+.icon {width: 10vh;}
+
+
+.main {
+   height: 80%;
+   min-width: 100vh;
+}
+.text {
+   display: inline-block;
+   width: 55vh;
+   margin: 20vh 10vh 0 1vh;
+}
+.text1 {
+   font-weight: bold;
+   font-size: 4vh;
+   line-height: 5vh;
+}
+.text2 {
+   margin: 6vh 0 0 0;
+   font-size: 2.55vh;
+   line-height: 3.5vh;
+}
+.next {
+   display: inline-block;
+   width: 24vh;
+   height: 7vh;
+   background: linear-gradient(107.04deg, #19D1DE 21.63%, #26C6DA 61.58%);
+   box-shadow: 0px 4px 15px rgba(38, 198, 218, 0.3);
+   border-radius: 17px;
+   text-align: center;
+   color: #FFFFFF;
+   margin: 6vh 0 0 0;
+   font-size: 2.6vh;
+}
+.hangBox {
+   display: inline-block;
+   width: 20vh;
+   float: right;
+   position: relative;
+   right: 35vh;
+}
+.hang {
+   width: 70vh;
+   position: relative;
+   right: 10vh;
+   top: 15vh;
+}

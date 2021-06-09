@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>MedClick</title>
+</head>
+<body>
+<form action="{% url 'auth.post_reg' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    Имя: <input name="name1" type="text"></br>
+    Фамилия: <input name="name2" type="text"></br>
+    Отчество: <input name="name3" type="text"></br>
+    Дата рождения: <input name="birth_day" type="date"></br>
+    СНИЛС: <input name="snils" type="file"></br>
+    Полис: <input name="polist" type="file"></br>
+    <button type="submit">Зарегистрироваться</button>
+    {% if message %}
+        <div>
+            {{message}}
+        </div>
+    {% endif %}
+</form>
+</body>
+</html>
