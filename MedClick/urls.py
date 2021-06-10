@@ -20,6 +20,7 @@ from index.views import index
 
 urlpatterns = [
     path('', index),
+    path('admin/', include('admin.urls')),
     path('auth/', include('user.urls')),
     path('chat/', include('chat.urls')),
     path('api/', include('api.urls')),

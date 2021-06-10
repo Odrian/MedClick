@@ -29,9 +29,9 @@ class User(models.Model):
             'birth_day': self.birth_day}
         is_d = self.is_doctor
         if is_d == 0:
-            arr.update(self.doctor.get_data())
-        elif is_d == 1:
             arr.update(self.person.get_data())
+        elif is_d == 1:
+            arr.update(self.doctor.get_data())
         return arr
 
     def __str__(self):
