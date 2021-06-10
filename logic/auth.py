@@ -14,7 +14,7 @@ def logic_phone(method, phone):
         return ['incorrect_method', 'auth.phone']
     if not phone:
         return ['null_phone', 'auth.phone']
-    if not (phone.isdigit() and len(phone) == 11 and phone[0] == '8'):
+    if not len(phone) <= 14:
         return ['incorrect_phone', 'auth.phone']
 
     user_cods = UserCods.objects.filter(phone=phone)

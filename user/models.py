@@ -11,7 +11,7 @@ def get_now_date():
 
 class User(models.Model):
     name = models.CharField(max_length=50)
-    phone = models.CharField(max_length=11, unique=True)
+    phone = models.CharField(max_length=15, unique=True)
     birth_day = models.DateField()
 
     is_doctor = models.SmallIntegerField()

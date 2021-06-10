@@ -30,16 +30,18 @@ def url_phone_code(request):
 
 
 def url_post_phone(request):
-    tele_phone = request.POST.get('phone')
-    if not isinstance(tele_phone, str):
+    phone = request.POST.get('phone')
+    if not isinstance(phone, str):
         resp = ['unread_phone', 'auth.phone']
     else:
-        tele_phone = '8' + tele_phone
+        if len(phone) > 15:
+            return ['too_long_phone', 'auth.phone']
+        phone = '+7' + phone
         resp = ['unknown_user', 'auth.phone']
-        if len(Doctor.objects.filter(phone=tele_phone)) != 0:
-            resp = logic_phone(request.method, tele_phone)
+        if len(Doctor.objects.filter(phone=phone)) != 0:
+            resp = logic_phone(request.method, phone)
             if resp[0] == 'all_ok':
-                request.session['phone'] = tele_phone
+                request.session['phone'] = phone
     return redirect(reverse(resp[1]))
 
 
