@@ -123,7 +123,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-#CSRF_FAILURE_VIEW = 'user.views.csrf_failure'
 AUTHENTICATION_BACKENDS = ['user.backends.ModelBackend']
 AUTH_USER_MODEL = 'user.User'
 

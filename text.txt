@@ -1,5 +1,5 @@
 #Установка
-*Установить Python*
+*Установить Python3*
 *Установить Pip*
 pip install django djangorestframework
 
