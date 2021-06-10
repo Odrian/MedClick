@@ -25,11 +25,13 @@ def get_chat(chat_id):
 
 def add_message(chat_id, phone, text, file, file_type):
     chat = get_chat(str(chat_id))
-    name = User.objects.get(phone=phone).full_name
+    user = User.objects.get(phone=phone)
+    pk = user.pk
+    name = user.name
     time = now()
     time = time.strftime('%d-%m-%Y %H:%M:%S')
 
-    message = {'name':name, 'phone':phone, 'date':time, 'text':text}
+    message = {'id': pk, 'name':name, 'phone':phone, 'date':time, 'text':text}
     if file and file_type:
         fc = chat['file_count']
         chat['file_count'] += 1

@@ -2,7 +2,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 
 from logic.chat import get_chat
-from .decorators import session_check
+from user.decorators import session_check
 
 
 @session_check

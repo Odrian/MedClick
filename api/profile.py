@@ -35,7 +35,7 @@ def api_all_doctors(request, phone):
     name = request.POST.get('name')
     if name:
         name = ' '.join(name.split()).title()
-        data = data.filter(user__full_name__contains=name)
+        data = data.filter(user__name__contains=name)
 
     data = list(map(lambda x: x.user.get_data(), data))
     return JsonResponse({'info': 'all_ok', 'data': data})
@@ -64,11 +64,11 @@ def api_get_self(request, phone):
 def api_edit_self(request, phone):
     user = User.objects.get(phone=phone)
 
-    full_name = request.POST.get('full_name')
-    if isinstance(full_name, str):
-        full_name = " ".join(full_name.split())
-        if len(full_name) <= 50:
-            user.full_name = full_name
+    name = request.POST.get('name')
+    if isinstance(name, str):
+        name = " ".join(name.split())
+        if len(name) <= 50:
+            user.name = name
 
     birth_day = request.POST.get('birth_day')
     if isinstance(birth_day, str):

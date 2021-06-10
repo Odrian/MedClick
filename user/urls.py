@@ -1,13 +1,15 @@
 from django.urls import path
-from .views import phone, post_phone, phone_code, post_code, register, post_register
+from .views import url_logout, url_phone, url_post_phone, url_phone_code, url_post_code#, url_register, url_post_register
 
 urlpatterns = [
-    path('phone/', phone, name='auth.phone'),
-    path('post_phone/', post_phone, name='auth.post_phone'),
+    path('logout/', url_logout, name='auth.logout'),
 
-    path('code/', phone_code, name='auth.code'),
-    path('post_code', post_code, name='auth.post_code'),
+    path('phone/', url_phone, name='auth.phone'),
+    path('post_phone/', url_post_phone, name='auth.post_phone'),
 
-#    path('register/', register, name='auth.reg'),
-#    path('post_register/', post_register, name='auth.post_reg'),
+    path('code/', url_phone_code, name='auth.code'),
+    path('post_code', url_post_code, name='auth.post_code'),
+
+#    path('register/', url_register, name='auth.reg'),
+#    path('post_register/', url_post_register, name='auth.post_reg'),
 ]

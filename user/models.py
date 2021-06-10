@@ -8,7 +8,7 @@ class UserManager(models.Manager):
 
 
 class User(models.Model):
-    full_name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50)
     phone = models.CharField(max_length=11, unique=True)
     birth_day = models.DateField()
 
@@ -23,7 +23,7 @@ class User(models.Model):
     def get_data(self):
         arr = {
             'id': self.pk,
-            'name': self.full_name,
+            'name': self.name,
             'birth_day': self.birth_day}
         is_d = self.is_doctor
         if is_d == 0:
