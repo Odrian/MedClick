@@ -14,5 +14,4 @@ def session_check(func):
         session.last_activity = now()
         session.save()
         return func(*args, phone=session.phone, **kwargs)
-        return func(*args, phone='', **kwargs)
     return wrapper
