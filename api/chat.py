@@ -16,7 +16,7 @@ def api_chat_list(request, phone):
 @api_view(['POST'])
 @session_check
 def api_check(request, phone):
-    chats = User.objects.get(phone=phone).chatlist_set.filter(check=False)
+    chats = User.objects.get(phone=phone).checker_set.filter(check=False)
     data = list(map(lambda x: x.chat.pk, chats))
     return {'info': 'all_ok', 'data': data}
 
@@ -77,7 +77,7 @@ def api_get_file(request, chat_id, file_id, phone):
 
 
 def check_chat(chat_id, phone):
-    chats = User.objects.get(phone=phone).textchat_set.all().filter(pk=chat_id)
+    chats = User.objects.get(phone=phone).checker_set.all().filter(chat_id=chat_id)
     return not bool(chats)
 
 

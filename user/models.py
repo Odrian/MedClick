@@ -6,6 +6,8 @@ from django.utils.crypto import salted_hmac
 class UserManager(models.Manager):
     use_in_migrations = True
 
+def get_now_date():
+    return django.utils.timezone.now().date()
 
 class User(models.Model):
     name = models.CharField(max_length=50)
@@ -14,7 +16,7 @@ class User(models.Model):
 
     is_doctor = models.SmallIntegerField()
     last_login = models.DateTimeField(default=django.utils.timezone.now)
-    date_joined = models.DateTimeField(default=django.utils.timezone.now)
+    date_joined = models.DateField(default=get_now_date)
 
     objects = UserManager()
     USERNAME_FIELD = 'phone'

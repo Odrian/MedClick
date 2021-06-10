@@ -4,12 +4,12 @@ import os
 from django.utils.timezone import now
 
 from MedClick.settings import MEDIA_ROOT
-from chat.models import TextChat, ChatCheck
+from chat.models import Chat, Checker
 from user.models import User
 
 
 def set_chat_checked(chat_id, phone, checked):
-    User.objects.get(phone=phone).chatcheck_set.get(chat=chat_id).check = checked
+    User.objects.get(phone=phone).checker_set.get(chat=chat_id).check = checked
 
 
 def get_chat_list(phone):
@@ -40,8 +40,8 @@ def add_message(chat_id, phone, text, file, file_type):
     chat['chat'].append(message)
     save_chat(chat_id, chat)
 
-    for user in chat.members.all():
-        user.chatcheck_set.get(chat=chat_id).check = False
+    for checker in Chat.objects.get(id=chat_id).checker_set.all():
+        checker.check = False
 
 
 def save_chat(chat_id, chat):
@@ -52,20 +52,25 @@ def save_chat(chat_id, chat):
         json.dump(chat, file, ensure_ascii=False)
 
 
-def make_chat(users):
-    chat = TextChat()
+def make_chat(phones):
+    chat = Chat()
     chat.save()
     ln = 0
-    for user in users:
-        user = User.objects.filter(phone=user)
+    for phone in phones:
+        user = User.objects.filter(phone=phone)
         if len(user) != 0:
             ln += 1
             user = user[0]
-            ChatCheck(user=user, chat=chat).save()
-            chat.members.add(user)
+            Checker(user=user, chat=chat).save()
     pk = chat.pk
     save_chat(pk, {"members": ln, "file_count": 0, "chat": []})
     return pk
+
+
+def add_user_to_chat(phone, chat_id):
+    user = User.objects.get(phone=phone)
+    chat = Chat.objects.get(id=chat_id)
+    Checker(user=user, chat=chat).save()
 
 
 def file_save(chat_id, file_id, f):
