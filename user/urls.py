@@ -8,6 +8,6 @@ urlpatterns = [
     path('code/', phone_code, name='auth.code'),
     path('post_code', post_code, name='auth.post_code'),
 
-    path('register/', register, name='auth.reg'),
-    path('post_register/', post_register, name='auth.post_reg'),
+#    path('register/', register, name='auth.reg'),
+#    path('post_register/', post_register, name='auth.post_reg'),
 ]

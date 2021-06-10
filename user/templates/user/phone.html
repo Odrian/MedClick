@@ -3,16 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <title>MedClick</title>
-    <script src="https://www.google.com/recaptcha/api.js"></script>
+	<link rel="stylesheet" type="text/css" href="/static/user/css/phone.css">
+	<script src="phone.js"></script>
 </head>
 <body>
 <form action="{% url 'auth.post_phone' %}" method="post">
-    {% csrf_token %}
-    <input name="phone" type="number">
-    {% comment %}
-    <div class="g-recaptcha" data-sitekey="6LeUOOgaAAAAACYJF_mK10z-2RKMe9JeR5TRB5ZW"></div>
-    {% endcomment %}
-    <button type="submit">Вход</button>
+	<div class="main">
+		<h2 class="title">Вход</h2>
+		<div class="some">Введите ваш номер телефона</div>
+        {% csrf_token %}
+		<div class="num">
+			<spam class="num1B">
+				<span class="num1">+7</span>
+			</spam>
+			<spam class="num2B">
+				<input class="num2" type="phone" value="9040003300" autofocus>
+			</spam>
+		</div>
+		<button class="submitB" type="submit">
+			<img class="mail" src="/static/user/img/mail.svg" alt="">
+			<span class="submit">Отправить код</span>
+		</button>
+		<div class="documents">Авторизируясь, вы принимаете <a href="index.html">пользовательское соглашение</a>, а также <a href="index.html">согласие на обработку персональных данных</a></div>
+	</div>
 </form>
 </body>
 </html>

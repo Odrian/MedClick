@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.utils.timezone import now
 
+from doctor.models import Doctor
 from logic.auth import logic_phone, logic_code, logic_register
 from user.models import Register
 
@@ -27,17 +28,15 @@ def register(request):
 
 def post_phone(request):
     tele_phone = request.POST.get('phone')
-    resp = logic_phone(request.method, tele_phone)
-    if resp[0] == 'all_ok':
-        reg = Register.objects.filter(phone=tele_phone)
-        if len(reg) == 0:
-            resp = ['unknown_user', 'auth.phone']
-            #Register(phone=tele_phone).save()
-        else:
-            reg = reg[0]
-            reg.time = now()
-            reg.save()
-        request.session['phone'] = tele_phone
+    if not isinstance(tele_phone, str):
+        resp = ['unread_phone', 'auth.phone']
+    else:
+        tele_phone = '8' + tele_phone
+        resp = ['unknown_user', 'auth.phone']
+        if len(Doctor.objects.filter(phone=tele_phone)) != 0:
+            resp = logic_phone(request.method, tele_phone)
+            if resp[0] == 'all_ok':
+                request.session['phone'] = tele_phone
     return redirect(reverse(resp[1]))
 
 
