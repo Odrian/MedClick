@@ -1,0 +1,7 @@
+#Установка
+*Установить Python*
+*Установить Pip*
+pip install django djangorestframework
+
+# Запуск
+python3 manage.py runserver
