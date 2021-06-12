@@ -2,8 +2,6 @@ from django.shortcuts import redirect, render
 
 
 def index(request):  # Проверить сессию
-#    if input() == 'yes':
-#        create_doctors()
     return render(request, 'index/index.html')
 
 
@@ -30,9 +28,12 @@ def create_doctors():
             name = choice(names)
             suname = choice(sunames)
             full_name = name + ' ' + suname
-            birth_day = str(randint(1970, 1999)) + '-0' + str(randint(1, 9)) + '-' + str(randint(11, 28))
-            user = User(name=full_name, phone=phone, birth_day=birth_day, is_doctor=True)
+            user = User(name=full_name, phone=phone, is_doctor=True)
             user.save()
-            Doctor(user_id=user.pk, cost=(randint(1, 10) * 50), experience=(str(randint(1, 7)) + ' лет'),
-                   service_types='Любой', work_time='Всегда', educations='Высшее', extra_field='').save()
+            doctor = Doctor(user_id=user.pk, cost=(randint(1, 10) * 50), experience=(str(randint(1, 7)) + ' лет'),
+                   service_types='Любой', work_time='Всегда', educations='Высшее', extra_field='')
+            doctor.save()
+            doctor.specifications.add(i)
             phone += 1
+
+#create_doctors()

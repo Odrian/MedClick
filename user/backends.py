@@ -1,18 +1,18 @@
-class ModelBackend:
+"""class ModelBackend:
     pass
-
-'''
-from django.contrib.auth import get_user_model
-
-User = get_user_model()
+"""
+from .models import User
 
 class ModelBackend:
     def authenticate(self, request, phone):
+        print(1)
         if phone is None:
             return
         user = User.objects.filter(phone=phone)
+        print(2)
         if len(user) == 0:
             return
+        print(3)
         return user[0]
 
     def get_user(self, user_id):
@@ -21,4 +21,3 @@ class ModelBackend:
         except User.DoesNotExist:
             return None
         return user
-'''

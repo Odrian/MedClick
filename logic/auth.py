@@ -91,9 +91,9 @@ def logic_register(request, registrate, phone):
         if len(polis) != 16:
             return ['incorrect_polis', 'auth.reg']
 
-    user = User(phone=phone, name=name, birth_day=birth_day, date_joined=now().date(), is_doctor=0)
+    user = User(phone=phone, name=name, date_joined=now().date(), is_doctor=0)
     user.save()
-    person = Person(user=user, polis=polis)
+    person = Person(user=user, birth_day=birth_day, polis=polis)
     person.save()
     return ['all_ok', 'chat.main']
 

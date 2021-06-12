@@ -6,7 +6,7 @@ from .models import Session
 
 def session_check(func):
     def wrapper(*args, **kwargs):
-        key = args[0].POST.get('session')
+        key = args[0].POST.get('session_key')
         session = Session.objects.filter(key=key)
         if len(session) == 0:
             return JsonResponse({'info':'session_error', 'path':'auth.phone'})

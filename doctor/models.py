@@ -4,7 +4,7 @@ from user.models import User
 
 
 class Specialization(models.Model):
-    name = models.CharField(max_length=64)
+    name = models.CharField(max_length=64, unique=True)
     objects = models.Manager()
 
 class Doctor(models.Model):

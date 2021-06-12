@@ -46,17 +46,24 @@ def url_post_phone(request):
 
 
 def url_post_code(request):
-    tele_phone = request.session.get('phone')
-    resp = logic_code(request.method, tele_phone, request.POST.get('code'))
-    if resp[1] == 'chat.main':
-        request.session['login'] = True
+    phone = request.session.get('phone')
+    code = request.POST.get('code')
+    if not (isinstance(phone, str) and isinstance(code, int)):
+        resp = ['unread_phone', 'auth.phone']
+    else:
+        resp = logic_code(request.method, phone, code)
+        if resp[1] == 'chat.main':
+            request.session['login'] = True
     return redirect(reverse(resp[1]))
 
 
 '''def url_post_register(request):
-    tele_phone = request.session.get('phone')
-    resp = logic_register(request, len(Register.objects.filter(phone=tele_phone)) != 0, tele_phone)
-    if resp[1] == 'all_ok':
-        Register.objects.filter(phone=tele_phone).delete()
-        request.session['login'] = True
+    phone = request.session.get('phone')
+    if not isinstance(phone, str):
+        resp = ['unread_phone', 'auth.phone']
+    esle:
+        resp = logic_register(request, len(Register.objects.filter(phone=phone)) != 0, tele_phone)
+        if resp[1] == 'all_ok':
+            Register.objects.filter(phone=tele_phone).delete()
+            request.session['login'] = True
     return redirect(reverse(resp[1]))'''

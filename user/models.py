@@ -12,21 +12,20 @@ def get_now_date():
 class User(models.Model):
     name = models.CharField(max_length=50)
     phone = models.CharField(max_length=15, unique=True)
-    birth_day = models.DateField()
 
     is_doctor = models.SmallIntegerField()
     last_login = models.DateTimeField(default=django.utils.timezone.now)
     date_joined = models.DateField(default=get_now_date)
+
+    freeze = models.BooleanField(default=False)
 
     objects = UserManager()
     USERNAME_FIELD = 'phone'
     REQUIRED_FIELDS = []
 
     def get_data(self):
-        arr = {
-            'id': self.pk,
-            'name': self.name,
-            'birth_day': self.birth_day}
+        arr = {'id': self.pk,
+               'name': self.name}
         is_d = self.is_doctor
         if is_d == 0:
             arr.update(self.person.get_data())
@@ -62,12 +61,14 @@ class User(models.Model):
 
 class Person(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    objects = models.Manager()
-
+    birth_day = models.DateField()
     polis = models.CharField(max_length=16, null=True)
 
+    objects = models.Manager()
+
     def get_data(self):
-        return {'polis': self.polis}
+        return {'polis': self.polis,
+                'birth_day': self.birth_day}
 
 
 
