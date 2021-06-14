@@ -39,9 +39,7 @@ INSTALLED_APPS = [
 
     'logic.apps.LogicConfig',
     'api.apps.ApiConfig',
-
-#    'admin.apps.AdminConfig',
-    'django.contrib.admin',
+    'admin.apps.AdminConfig',
 
     'index.apps.IndexConfig',
     'user.apps.UserConfig',
@@ -116,6 +114,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'index/static'),
     os.path.join(BASE_DIR, 'user/static'),
     os.path.join(BASE_DIR, 'chat/static'),
+    os.path.join(BASE_DIR, 'admin/static'),
 ]
 
 # Default primary key field type

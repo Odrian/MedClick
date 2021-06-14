@@ -13,12 +13,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='AdminSession',
-            fields=[
-                ('key', models.CharField(max_length=16, primary_key=True, serialize=False)),
-            ],
-        ),
-        migrations.CreateModel(
             name='Session',
             fields=[
                 ('key', models.CharField(max_length=16, primary_key=True, serialize=False)),

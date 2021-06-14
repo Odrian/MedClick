@@ -7,6 +7,7 @@ from django.utils.timezone import now
 
 from MedClick.settings import GOOGLE_RECAPTCHA_SECRET_KEY
 from user.models import User, UserCods, Person
+from django.utils.timezone import now
 
 
 def logic_phone(method, phone):
@@ -14,12 +15,13 @@ def logic_phone(method, phone):
         return ['incorrect_method', 'auth.phone']
     if not phone:
         return ['null_phone', 'auth.phone']
-    if not len(phone) <= 14:
+    if len(phone) > 14:
         return ['incorrect_phone', 'auth.phone']
 
-    user_cods = UserCods.objects.filter(phone=phone)
-    if len(user_cods) == 1:
-        user_cod = user_cods[0]
+    user_cod = UserCods.objects.filter(phone=phone)
+    if len(user_cod) == 1:
+        user_cod = user_cod[0]
+        user_cod.code_time = now()
     else:
         user_cod = UserCods(phone=phone)
         user_cod.save()
@@ -33,21 +35,21 @@ def logic_code(method, phone, code):
     if method != 'POST':
         return ['incorrect_method', 'auth.phone']
 
-    if not phone:
-        return ['null_phone', 'auth.phone']
+    if not isinstance(phone, str):
+        return ['incorrect_phone', 'auth.phone']
 
     user_cods = UserCods.objects.filter(phone=phone)
     if len(user_cods) != 1:
-        return ['null_phone', 'auth.phone']
+        return ['incorrect_phone', 'auth.phone']
 
-    if not code:
-        return ['null_code', 'auth.phone']
+    if not isinstance(code, str):
+        return ['incorrect_code', 'auth.phone']
 
     user_cod = user_cods[0]
     if now() > user_cod.code_time + datetime.timedelta(minutes=10):
         return ['code_time_eror', 'auth.phone']
     if code != str(user_cod.code):
-        return ['incorrect_code', 'auth.phone']
+        return ['incorrect_code', 'auth.code']
 
     user_cod.delete()
     user = User.objects.filter(phone=phone)
@@ -101,7 +103,7 @@ def logic_register(request, registrate, phone):
 
 
 def generare_code(user_cods):
-    code = ''.join([str(randint(0, 9)) for i in range(4)])
+    code = ''.join([str(randint(0, 9)) for _ in range(4)])
     print(code)
     user_cods.code = code
     user_cods.code_time = now()

@@ -1,4 +1,4 @@
-"""class ModelBackend:
+class ModelBackend:
     pass
 """
 from .models import User
@@ -21,3 +21,4 @@ class ModelBackend:
         except User.DoesNotExist:
             return None
         return user
+"""

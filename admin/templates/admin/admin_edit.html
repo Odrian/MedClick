@@ -1,0 +1,46 @@
+{% extends "./base.html" %}
+
+{% block content %}
+<div id="content" class="colM">
+    <h1>{% if edit%}Изменить{% else %}Добавить{% endif %} Админа</h1>
+    <div id="content-main">
+        <form action="post/" method="post" id="user_form" novalidate>
+            {% csrf_token %}
+            <div>
+                <fieldset class="module aligned wide">
+                    <h2>Данные</h2>
+                    <div class="form-row">
+                        <label class="required" for="phone">Телефон:</label>
+                        <input type="tel" name="phone" maxlength="15" autofocus required id="phone" value="{{ phone }}">
+                        {% if er == '1' %}<div class="help error">Введите телефон</div>{% endif %}
+                        {% if er == '3' %}<div class="help error">Данный телефон уже занет</div>{% endif %}
+                    </div>
+                    <div class="form-row">
+                        <label for="name">ФИО:</label>
+                        <input type="text" name="name" required id="name" value="{{ name }}">
+                        {% if er == '2' %}<div class="error help">Введите ФИО</div>{% endif %}
+                    </div>
+                    <div class="form-row">
+                        <input type="checkbox" name="freeze" id="freeze">
+                        <label class="vCheckboxLabel" for="freeze"{% if freeze == 'True %}checked{% endif %}>Заморожен</label>
+                        <div class="help">Если пользователь заморожен, он не сможен ничего делать</div>
+                    </div>
+                </fieldset>
+                <div class="submit-row">
+                    <input type="submit" value="Сохранить" class="default" name="_save">
+                    {% if edit %}
+                    <p class="deletelink-box"><a href="/admin/auth/user/1/delete/" class="deletelink">Delete</a></p>
+                    {% endif %}
+                    <input type="submit" value="Сохранить и продолжить изменять" name="_continue">
+                    <input type="submit" value="Сохранить и добавить нового" name="_addanother">
+                </div>
+<!--                <script id="django-admin-form-add-constants" src="/static/admin/js/change_form.js"
+                        data-model-name="user" async></script>
+                <script id="django-admin-prepopulated-fields-constants" src="/static/admin/js/prepopulate_init.js"
+                        data-prepopulated-fields="[]"></script>-->
+            </div>
+        </form>
+    </div>
+    <br class="clear">
+</div>
+{% endblock %}

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+
+<html lang="ru" dir="ltr">
+<head>
+    <title>MedClick</title>
+    <link rel="stylesheet" type="text/css" href="/static/admin/css/base.css">
+
+    <link rel="stylesheet" type="text/css" href="/static/admin/css/responsive.css">
+    <link rel="stylesheet" type="text/css" href="/static/admin/css/forms.css">
+
+    <link rel="stylesheet" type="text/css" href="/static/admin/css/nav_sidebar.css">
+    <script src="/static/admin/js/nav_sidebar.js" defer></script>
+
+    <link rel="stylesheet" type="text/css" href="/static/admin/css/changelists.css">
+
+    <script src="/static/admin/js/jsi18n.js"></script>
+
+    <script src="/static/admin/js/jquery.init.js"></script>
+    <script src="/static/admin/js/vendor/jquery/jquery.js"></script>
+    <script src="/static/admin/js/vendor/xregexp/xregexp.js"></script>
+
+    <script src="/static/admin/js/core.js"></script>
+
+    <script src="/static/admin/js/admin/RelatedObjectLookups.js"></script>
+
+    <script src="/static/admin/js/actions.js"></script>
+<!--    <script src="/static/admin/js/urlify.js"></script> -->
+<!--    <script src="/static/admin/js/prepopulate.js"></script> -->
+
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+    <meta name="robots" content="NONE,NOARCHIVE">
+</head>
+
+
+<body class="change-list" data-admin-utc-offset="0">
+<div id="container">
+    <div id="header">
+        <div id="branding">
+            <h1 id="site-name"><a href="/admin/">MedClick Администрация</a></h1>
+        </div>
+        <div id="user-tools">
+            Привет,
+            <strong>admin</strong>.
+            <a href="/chat/">Открыть чат</a> /
+            <a href="/admin/password_change/">Сменить телефон</a> /
+            <a href="/admin/logout/">Выйти</a>
+        </div>
+    </div>
+
+    <div class="breadcrumbs">
+        <a href="/admin/">Home</a>
+        {% if path %} &rsaquo; {{ path }}{% endif %}
+    </div>
+    <div class="main shifted" id="main">
+        <button class="sticky toggle-nav-sidebar" id="toggle-nav-sidebar" aria-label="Toggle navigation"></button>
+        <nav class="sticky" id="nav-sidebar">
+            <div class="app-auth module current-app">
+                <table>
+                    <caption>
+                        <a href="/admin/" class="section" >Больница №1</a>
+                    </caption>
+                    <tr class="{% if path == 'Доктора' %}current-model{% endif %}">
+                      <th scope="row"><a href="/admin/doctor/" aria-current="page">Доктора</a></th>
+                      <td><a href="/admin/doctor/add/" class="addlink">Добавить</a></td>
+                    </tr>
+                    <tr class="{% if path == 'Специализации' %}current-model{% endif %}">
+                        <th scope="row"><a href="/admin/special/">Специализации</a></th>
+                        <td><a href="/admin/special/add/" class="addlink">Добавить</a></td>
+                    </tr>
+                    <tr class="{% if path == 'Админы' %}current-model{% endif %}">
+                        <th scope="row"><a href="/admin/admin/">Админы</a></th>
+                        <td><a href="/admin/admin/add/" class="addlink">Добавить</a></td>
+                    </tr>
+                </table>
+            </div>
+        </nav>
+        <div class="content">
+            {% block content %}
+
+            {% endblock %}
+            <div id="footer"></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

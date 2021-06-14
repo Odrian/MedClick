@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>MedClick</title>
 	<link rel="stylesheet" type="text/css" href="/static/user/css/phone.css">
-	<script src="phone.js"></script>
 </head>
 <body>
 <form action="{% url 'auth.post_phone' %}" method="post">
@@ -17,7 +16,7 @@
 				<span class="num1">+7</span>
 			</spam>
 			<spam class="num2B">
-				<input class="num2" type="phone" value="9040003300" autofocus>
+				<input name="phone" class="num2" type="num" value="9040003300" autofocus>
 			</spam>
 		</div>
 		<button class="submitB" type="submit">

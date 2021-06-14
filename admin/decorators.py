@@ -1,16 +1,15 @@
 from django.http import JsonResponse
-from rest_framework.decorators import api_view
+from django.shortcuts import redirect
+from django.urls import reverse
 
-from api.models import AdminSession
-
+from .models import Admin
 
 def admin_session_check(func):
-    @api_view(['POST'])
     def wrapper(*args, **kwargs):
-        key = args[0].POST.get('session_key')
+        phone = args[0].session.get('phone', '')
         try:
-            AdminSession.objects.get(key=key)
-        except AdminSession.DoesNotExist:
-            return JsonResponse({'info': 'session_error'})
+W            Admin.objects.get(user__phone=phone)
+        except Admin.DoesNotExist:
+            return redirect(reverse('auth.phone'))
         return func(*args, **kwargs)
     return wrapper

@@ -1,0 +1,88 @@
+{% extends "./base.html" %}
+
+{% block content %}
+<div id="content" class="">
+<h1>Select user to change</h1>
+<div id="content-main">
+    <ul class="object-tools">
+    <li>
+        <a href="/admin/admin/add/" class="addlink">Добавить Админа</a>
+    </li>
+    </ul>
+    <div class="module filtered" id="changelist">
+        <div class="changelist-form-container">
+            <div id="toolbar"><form id="changelist-search" method="get">
+                <div>
+                    <label for="searchbar"><img src="/static/admin/img/search.svg" alt="Поиск"></label>
+                    <input type="text" size="40" name="q" value="{{ serch }}" id="searchbar" autofocus>
+                    <input type="submit" value="Искать">
+                </div>
+            </form></div>
+            <form id="changelist-form" method="post" novalidate>
+                {% csrf_token %}
+                <div class="actions">
+                    <label>Действие: <select name="action" required>
+                        <option value="" selected></option>
+                        <option value="delete_selected">Удалить выбраных админов</option>
+                        <option value="freeze">Заморозить</option>
+                        <option value="unfreeze">Разморозить</option>
+                    </select></label><input type="hidden" name="select_across" value="0" class="select-across">
+                    <button type="submit" class="button" name="index" value="0">Сделать</button>
+                    <span class="action-counter" data-actions-icnt="1">0 из 1 выброно</span>
+                </div>
+                <div class="results">
+                    <table id="result_list">
+                        <thead>
+                        <tr>{% if d %}{% endif %}
+                            <th scope="col" class="action-checkbox-column">
+                                <div class="text"><span><input type="checkbox" id="action-toggle"></span></div>
+                                <div class="clear"></div>
+                            </th>
+                            <th scope="col" class="sortable column-phone">
+                                <div class="text">Телефон</div>
+                                <div class="clear"></div>
+                            </th>
+                            <th scope="col" class="sortable column-name">
+                                <div class="text">ФИО</div>
+                                <div class="clear"></div>
+                            </th>
+                            <th scope="col" class="sortable column-freeze">
+                                <div class="text">Заморожен?</div>
+                                <div class="clear"></div>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for admin in admins %}
+                            <tr>
+                                <td class="action-checkbox">
+                                    <input type="checkbox" name="_selected_action" value="{{ admin.id }}" class="action-select">
+                                </td>
+                                <th class="field-username"><a href="/admin/admin/{{ admin.id }}/">{{ admin.phone }}</a></th>
+                                <td class="name">{{ admin.name }}</td>
+                                <td class="field-freeze"><img src="/static/admin/img/icon-{% if admin.freeze %}yes{% else %}no{% endif %}.svg" alt="#"></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <p class="paginator">{{ admins|length }} Админов</p>
+            </form>
+        </div>
+        <div id="changelist-filter">
+            <h2>Фильтры</h2>
+            <h3> По активности </h3>
+            <ul>
+                <li class="selected">
+                    <a href="?">Любой</a></li>
+                <li class="">
+                    <a href="?is_freeze=1">Заморожен</a></li>
+                <li class="">
+                    <a href="?is_freeze=0">Не заморожен</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<br class="clear">
+</div>
+{% endblock %}
