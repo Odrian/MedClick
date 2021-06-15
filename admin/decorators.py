@@ -8,7 +8,7 @@ def admin_session_check(func):
     def wrapper(*args, **kwargs):
         phone = args[0].session.get('phone', '')
         try:
-W            Admin.objects.get(user__phone=phone)
+            Admin.objects.get(user__phone=phone)
         except Admin.DoesNotExist:
             return redirect(reverse('auth.phone'))
         return func(*args, **kwargs)
