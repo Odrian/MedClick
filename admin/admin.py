@@ -15,12 +15,9 @@ def admin_admin_index(request):
 def admin_admin_index_post(request):
     lst = request.POST.getlist('_selected_action')
     action = request.POST.getlist('action')
-    print(lst, action)
     if not (isinstance(lst, list) and isinstance(action, list)):
-        print(1)
         return redirect('..')
     if len(action) != 1:
-        print(2)
         return redirect('..')
 
     admins = Admin.objects.filter(user__in=lst)
@@ -92,7 +89,6 @@ def admin_admin_edit(request, user_id):
     if len(admin) == 0:
         return redirect('..')
     admin = admin[0].user
-    print(admin.freeze)
     return render(request, 'admin/admin_edit.html', context={'path': 'Админы', 'er': request.GET.get('er', '0'), 'edit': 1,
                                                              'name': admin.name, 'phone': admin.phone, 'freeze': int(admin.freeze)})
 
