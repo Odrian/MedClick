@@ -166,11 +166,15 @@
     padding-left: 0;
 }
 
-#changelist-filter a {
+#changelist-filter li, #changelist-filter a {
     display: block;
     color: var(--body-quiet-color);
     text-overflow: ellipsis;
     overflow-x: hidden;
+    cursor: pointer;
+}
+#changelist-filter li:hover {
+    color: #800000;
 }
 
 #changelist-filter li.selected {
@@ -179,7 +183,7 @@
     margin-left: -15px;
 }
 
-#changelist-filter li.selected a {
+#changelist-filter li.selected {
     color: var(--link-selected-fg);
 }
 

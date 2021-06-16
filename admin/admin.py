@@ -7,67 +7,44 @@ from user.models import User
 
 
 @admin_session_check
-def index(request):
-    admins = Admin.objects.all()
-
-    freeze = request.GET.get('freeze')
-    if freeze is not None:
-        admins = admins.filter(user__freeze=freeze)
-
-    serch = request.GET.get('q', '')
-    if serch:
-        admins_ = admins.filter(user__phone__icontains=serch)
-        if len(admins_):
-            admins = admins_
-        else:
-            admins = admins.filter(user__name__icontains=serch)
-
-    admins = list(map(lambda x: x.user, admins))
-    return render(request, 'admin/admin.html', context={'path': 'Админы', 'admins': admins, 'serch': serch,
-                                                        'length': len(admins)})
+def admin_admin_index(request):
+    admins = list(map(lambda x: x.user, Admin.objects.all()))
+    return render(request, 'admin/admin.html', context={'path': 'Админы', 'admins': admins, 'length': len(admins)})
 
 
-def index_post(request):
-    print(request.POST)
-    if request.POST.get('filter') == '1':
-        fr_1 = request.POST.get('filter_all')
-        fr_2 = request.POST.get('filter_freeze')
-        fr_3 = request.POST.get('filter_unfreeze')
-        if fr_1:
-            return redirect()
-    else:
-        lst = request.POST.getlist('_selected_action')
-        action = request.POST.getlist('action')
-        print(lst, action)
-        if not (isinstance(lst, list) and isinstance(action, list)):
-            print(1)
-            return redirect('..')
-        if len(action) != 1:
-            print(2)
-            return redirect('..')
-
-        admins = Admin.objects.filter(user__in=lst)
-
-        action = action[0]
-        if action == 'delete':
-            for admin in admins:
-                user = admin.user
-                user.delete()
-        elif action == 'freeze':
-            for admin in admins:
-                user = admin.user
-                user.freeze = True
-                user.save()
-        elif action == 'unfreeze':
-            for admin in admins:
-                user = admin.user
-                user.freeze = False
-                user.save()
+def admin_admin_index_post(request):
+    lst = request.POST.getlist('_selected_action')
+    action = request.POST.getlist('action')
+    print(lst, action)
+    if not (isinstance(lst, list) and isinstance(action, list)):
+        print(1)
         return redirect('..')
+    if len(action) != 1:
+        print(2)
+        return redirect('..')
+
+    admins = Admin.objects.filter(user__in=lst)
+
+    action = action[0]
+    if action == 'delete':
+        for admin in admins:
+            user = admin.user
+            user.delete()
+    elif action == 'freeze':
+        for admin in admins:
+            user = admin.user
+            user.freeze = True
+            user.save()
+    elif action == 'unfreeze':
+        for admin in admins:
+            user = admin.user
+            user.freeze = False
+            user.save()
+    return redirect('..')
 
 
 @admin_session_check
-def admin_create_admin(request):
+def admin_admin_create(request):
     phone = request.GET.get('phone', '')
     name = request.GET.get('name', '')
     freeze = request.GET.get('freeze')
@@ -76,7 +53,7 @@ def admin_create_admin(request):
 
 
 @admin_session_check
-def admin_create_admin_post(request):
+def admin_admin_create_post(request):
     phone = request.POST.get('phone')
     name = request.POST.get('name')
     freeze = request.POST.get('freeze')
@@ -110,7 +87,7 @@ def admin_create_admin_post(request):
 
 
 @admin_session_check
-def admin_edit_admin(request, user_id):
+def admin_admin_edit(request, user_id):
     admin = Admin.objects.filter(user=user_id)
     if len(admin) == 0:
         return redirect('..')
@@ -121,7 +98,7 @@ def admin_edit_admin(request, user_id):
 
 
 @admin_session_check
-def admin_edit_admin_post(request, user_id):
+def admin_admin_edit_post(request, user_id):
     admin = Admin.objects.filter(user=user_id)
     if len(admin) == 0:
         return redirect('../..')
@@ -163,7 +140,7 @@ def admin_edit_admin_post(request, user_id):
 
 
 @admin_session_check
-def admin_delete_admin(request, user_id):
+def admin_admin_delete(request, user_id):
     admin = Admin.objects.filter(id=user_id)
     if len(admin):
         admin[0].user.delete()
@@ -171,11 +148,11 @@ def admin_delete_admin(request, user_id):
 
 
 urlpatterns = [
-    path('', index),
-    path('post/', index_post),
-    path('add/', admin_create_admin),
-    path('add/post/', admin_create_admin_post),
-    path('<int:user_id>/', admin_edit_admin),
-    path('<int:user_id>/post/', admin_edit_admin_post),
-    path('<int:user_id>/delete/', admin_delete_admin),
+    path('', admin_admin_index),
+    path('post/', admin_admin_index_post),
+    path('add/', admin_admin_create),
+    path('add/post/', admin_admin_create_post),
+    path('<int:user_id>/', admin_admin_edit),
+    path('<int:user_id>/post/', admin_admin_edit_post),
+    path('<int:user_id>/delete/', admin_admin_delete),
 ]

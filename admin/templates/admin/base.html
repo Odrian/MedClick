@@ -27,6 +27,23 @@
     <script src="/static/admin/js/urlify.js"></script>
     <script src="/static/admin/js/prepopulate.js"></script>
 
+    <script>
+function search() {
+  var filter, tr, phone, name, i;
+  filter = document.getElementById('searchbar').value.toLowerCase();
+  tr = document.getElementById("tbody").getElementsByTagName('tr');
+  for (i = 0; i < tr.length; i++) {
+    phone = tr[i].getElementsByClassName("phone")[0].firstChild.textContent;
+    name = tr[i].getElementsByClassName("name")[0].textContent.toLowerCase();
+    if (phone.indexOf(filter) > -1 || name.indexOf(filter) > -1) {
+      tr[i].style.display = "";
+    } else {
+      tr[i].style.display = "none";
+    }
+  }
+}
+    </script>
+
     <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
     <meta name="robots" content="NONE,NOARCHIVE">
