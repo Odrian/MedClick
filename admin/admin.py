@@ -10,9 +10,9 @@ from user.models import User
 def index(request):
     admins = Admin.objects.all()
 
-    is_freeze = request.GET.get('is_freeze')
-    if is_freeze is not None:
-        admins = admins.filter(user__freeze=is_freeze)
+    freeze = request.GET.get('freeze')
+    if freeze is not None:
+        admins = admins.filter(user__freeze=freeze)
 
     serch = request.GET.get('q', '')
     if serch:
@@ -23,16 +23,56 @@ def index(request):
             admins = admins.filter(user__name__icontains=serch)
 
     admins = list(map(lambda x: x.user, admins))
-    return render(request, 'admin/admin.html', context={'path': 'Админы', 'admins': admins, 'serch': serch})
+    return render(request, 'admin/admin.html', context={'path': 'Админы', 'admins': admins, 'serch': serch,
+                                                        'length': len(admins)})
+
+
+def index_post(request):
+    print(request.POST)
+    if request.POST.get('filter') == '1':
+        fr_1 = request.POST.get('filter_all')
+        fr_2 = request.POST.get('filter_freeze')
+        fr_3 = request.POST.get('filter_unfreeze')
+        if fr_1:
+            return redirect()
+    else:
+        lst = request.POST.getlist('_selected_action')
+        action = request.POST.getlist('action')
+        print(lst, action)
+        if not (isinstance(lst, list) and isinstance(action, list)):
+            print(1)
+            return redirect('..')
+        if len(action) != 1:
+            print(2)
+            return redirect('..')
+
+        admins = Admin.objects.filter(user__in=lst)
+
+        action = action[0]
+        if action == 'delete':
+            for admin in admins:
+                user = admin.user
+                user.delete()
+        elif action == 'freeze':
+            for admin in admins:
+                user = admin.user
+                user.freeze = True
+                user.save()
+        elif action == 'unfreeze':
+            for admin in admins:
+                user = admin.user
+                user.freeze = False
+                user.save()
+        return redirect('..')
 
 
 @admin_session_check
 def admin_create_admin(request):
     phone = request.GET.get('phone', '')
-    FIO = request.GET.get('FIO', '')
+    name = request.GET.get('name', '')
     freeze = request.GET.get('freeze')
     return render(request, 'admin/admin_edit.html', context={'path': 'Админы', 'er': request.GET.get('er', '0'),
-                                                            'phone': phone, 'FIO': FIO, 'freeze': freeze})
+                                                            'phone': phone, 'name': name, 'freeze': freeze})
 
 
 @admin_session_check
@@ -46,7 +86,7 @@ def admin_create_admin_post(request):
 
     freeze = bool(freeze)
 
-    phone = phone.replace('+7', '8')
+    phone = phone.replace('+7', '8').replace(' ', '')
     if not (phone.isdecimal() and len(phone) == 11):
         return redirect('..?er=1&phone=' + phone + '&name=' + name + '&freeze=' + str(freeze))
 
@@ -98,13 +138,13 @@ def admin_edit_admin_post(request, user_id):
 
     phone = phone.replace('+7', '8')
     if not (phone.isdecimal() and len(phone) == 11):
-        return redirect('..?er=3&phone=' + phone + '&name=' + name + '&freeze=' + str(freeze))
+        return redirect('..?er=1&phone=' + phone + '&name=' + name + '&freeze=' + str(freeze))
 
     name = " ".join(map(lambda x: x.capitalize(), name.split()))
     if name == '':
         return redirect('..?er=2&phone=' + phone + '&name=' + name + '&freeze=' + str(freeze))
 
-    if len(User.objects.filter(phone=phone)) != 0:
+    if len(User.objects.filter(phone=phone)) != 0 and phone != admin.phone:
         return redirect('..?er=3&phone=' + phone + '&name=' + name + '&freeze=' + str(freeze))
 
     admin.name = name
@@ -115,9 +155,9 @@ def admin_edit_admin_post(request, user_id):
     if request.POST.get('_save'):
         return redirect('../..')
     if request.POST.get('_addanother'):
-        return redirect('..')
+        return redirect('../../add')
     if request.POST.get('_continue'):
-        return redirect('../../' + str(user.pk))
+        return redirect('..')
     return redirect('../..')
 
 
@@ -132,6 +172,7 @@ def admin_delete_admin(request, user_id):
 
 urlpatterns = [
     path('', index),
+    path('post/', index_post),
     path('add/', admin_create_admin),
     path('add/post/', admin_create_admin_post),
     path('<int:user_id>/', admin_edit_admin),

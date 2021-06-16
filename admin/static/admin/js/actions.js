@@ -61,7 +61,7 @@
         // and contains the total amount of objects in the queryset
         const actions_icnt = Number(counter.dataset.actionsIcnt);
         counter.textContent = interpolate(
-            ngettext('%(sel)s of %(cnt)s selected', '%(sel)s of %(cnt)s selected', sel), {
+            ngettext('%(sel)s из %(cnt)s выбрано', '%(sel)s из %(cnt)s выбрано', sel), {
                 sel: sel,
                 cnt: actions_icnt
             }, true);

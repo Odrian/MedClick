@@ -2,7 +2,7 @@
 
 {% block content %}
 <div id="content" class="">
-<h1>Select user to change</h1>
+<h1>Выберете админа для изменения</h1>
 <div id="content-main">
     <ul class="object-tools">
     <li>
@@ -18,17 +18,17 @@
                     <input type="submit" value="Искать">
                 </div>
             </form></div>
-            <form id="changelist-form" method="post" novalidate>
+            <form id="changelist-form" method="post" action="post/" novalidate>
                 {% csrf_token %}
                 <div class="actions">
                     <label>Действие: <select name="action" required>
                         <option value="" selected></option>
-                        <option value="delete_selected">Удалить выбраных админов</option>
+                        <option value="delete">Удалить выбраных админов</option>
                         <option value="freeze">Заморозить</option>
                         <option value="unfreeze">Разморозить</option>
-                    </select></label><input type="hidden" name="select_across" value="0" class="select-across">
-                    <button type="submit" class="button" name="index" value="0">Сделать</button>
-                    <span class="action-counter" data-actions-icnt="1">0 из 1 выброно</span>
+                    </select></label>
+                    <button type="submit" class="button">Сделать</button>
+                    <span class="action-counter" data-actions-icnt="{{ length }}">0 из {{ length }} выбрано</span>
                 </div>
                 <div class="results">
                     <table id="result_list">
@@ -66,11 +66,16 @@
                         </tbody>
                     </table>
                 </div>
-                <p class="paginator">{{ admins|length }} Админов</p>
+                <p class="paginator">{{ length }} Админов</p>
             </form>
         </div>
         <div id="changelist-filter">
             <h2>Фильтры</h2>
+            {% if '' == '' %}
+            <h3 id="changelist-filter-clear">
+                <a href="?q=csdf">✖ Очистить фильтры</a>
+            </h3>
+            {% endif %}
             <h3> По активности </h3>
             <ul>
                 <li class="selected">

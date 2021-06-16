@@ -12,7 +12,7 @@
                     <div class="form-row">
                         <label class="required" for="phone">Телефон:</label>
                         <input type="tel" name="phone" maxlength="15" autofocus required id="phone" value="{{ phone }}">
-                        {% if er == '1' %}<div class="help error">Введите телефон</div>{% endif %}
+                        {% if er == '1' %}<div class="help error">Неправельный телефон, например 89040007711</div>{% endif %}
                         {% if er == '3' %}<div class="help error">Данный телефон уже занет</div>{% endif %}
                     </div>
                     <div class="form-row">
@@ -21,8 +21,8 @@
                         {% if er == '2' %}<div class="error help">Введите ФИО</div>{% endif %}
                     </div>
                     <div class="form-row">
-                        <input type="checkbox" name="freeze" id="freeze">
-                        <label class="vCheckboxLabel" for="freeze"{% if freeze == 'True %}checked{% endif %}>Заморожен</label>
+                        <input type="checkbox" name="freeze" id="freeze"{% if freeze == 'True' %} checked{% endif %}>
+                        <label class="vCheckboxLabel" for="freeze">Заморожен</label>
                         <div class="help">Если пользователь заморожен, он не сможен ничего делать</div>
                     </div>
                 </fieldset>
