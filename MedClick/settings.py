@@ -107,6 +107,7 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
+LOGFILE = os.path.join(BASE_DIR, 'log.txt')
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -114,7 +115,7 @@ LOGGING = {
         'file': {
             'level': 'INFO',
             'class': 'logging.FileHandler',
-            'filename': os.path.join(BASE_DIR, 'log.txt'),
+            'filename': LOGFILE,
         },
     },
     'loggers': {
