@@ -299,7 +299,7 @@ p img, h1 img, h2 img, h3 img, h4 img, td img {
     white-space: nowrap;
 }
 
-.hidden {
+[class*="hidden"] {
     display: none;
 }
 
@@ -334,12 +334,12 @@ tfoot td {
     border-bottom: 1px solid var(--hairline-color);
 }
 
-tfoot td {
+tfoot * {
     border-bottom: none;
     border-top: 1px solid var(--hairline-color);
 }
 
-thead th.required {
+thead *.required {
     color: var(--body-loud-color);
 }
 
@@ -347,21 +347,18 @@ tr.alt {
     background: var(--darkened-bg);
 }
 
-tr:nth-child(odd), .row-form-errors {
-    background: var(--body-bg);
-}
-
-tr:nth-child(even),
-tr:nth-child(even) .errorlist,
-tr:nth-child(odd) + .row-form-errors,
-tr:nth-child(odd) + .row-form-errors .errorlist {
+tbody.coloring tr:nth-child(even) {
     background: var(--darkened-bg);
 }
 
 /* SORTABLE TABLES */
 
-thead th {
-    padding: 5px 10px;
+tbody.colored tr:nth-child(even) {
+    background: var(--darkened-bg);
+}
+
+thead * {
+    padding: 10px;
     line-height: normal;
     text-transform: uppercase;
     background: var(--darkened-bg);
@@ -860,11 +857,6 @@ table#change-history tbody th {
     width: 260px;
     position: relative;
     margin-right: -300px;
-}
-
-#footer {
-    clear: both;
-    padding: 10px;
 }
 
 /* COLUMN TYPES */

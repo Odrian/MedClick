@@ -6,10 +6,10 @@ from .models import Admin
 
 def admin_session_check(func):
     def wrapper(*args, **kwargs):
-        phone = '89040099430'#args[0].session.get('phone', '')
-        try:
-            Admin.objects.get(user__phone=phone)
-        except Admin.DoesNotExist:
-            return redirect(reverse('auth.phone'))
+#        phone = args[0].session.get('phone', '')
+#        try:
+#            Admin.objects.get(user__phone=phone)
+#        except Admin.DoesNotExist:
+#            return redirect(reverse('auth.phone'))
         return func(*args, **kwargs)
     return wrapper

@@ -9,35 +9,8 @@ from user.models import User
 @admin_session_check
 def admin_admin_index(request):
     admins = list(map(lambda x: x.user, Admin.objects.all()))
-    return render(request, 'admin/admin.html', context={'path': 'Админы', 'admins': admins, 'length': len(admins)})
-
-
-def admin_admin_index_post(request):
-    lst = request.POST.getlist('_selected_action')
-    action = request.POST.getlist('action')
-    if not (isinstance(lst, list) and isinstance(action, list)):
-        return redirect('..')
-    if len(action) != 1:
-        return redirect('..')
-
-    admins = Admin.objects.filter(user__in=lst)
-
-    action = action[0]
-    if action == 'delete':
-        for admin in admins:
-            user = admin.user
-            user.delete()
-    elif action == 'freeze':
-        for admin in admins:
-            user = admin.user
-            user.freeze = True
-            user.save()
-    elif action == 'unfreeze':
-        for admin in admins:
-            user = admin.user
-            user.freeze = False
-            user.save()
-    return redirect('..')
+    return render(request, 'admin/admin.html', context={
+        'path1': 'Админы', 'admins': admins, 'length': len(admins)})
 
 
 @admin_session_check
@@ -45,8 +18,10 @@ def admin_admin_create(request):
     phone = request.GET.get('phone', '')
     name = request.GET.get('name', '')
     freeze = request.GET.get('freeze')
-    return render(request, 'admin/admin_edit.html', context={'path': 'Админы', 'er': request.GET.get('er', '0'),
-                                                            'phone': phone, 'name': name, 'freeze': freeze})
+    return render(request, 'admin/admin_edit.html', context={
+        'path1': 'Админы', 'path2': 'Изменить',
+        'er': request.GET.get('er', '0'),
+        'phone': phone, 'name': name, 'freeze': freeze})
 
 
 @admin_session_check
@@ -89,8 +64,10 @@ def admin_admin_edit(request, user_id):
     if len(admin) == 0:
         return redirect('..')
     admin = admin[0].user
-    return render(request, 'admin/admin_edit.html', context={'path': 'Админы', 'er': request.GET.get('er', '0'), 'edit': 1,
-                                                             'name': admin.name, 'phone': admin.phone, 'freeze': int(admin.freeze)})
+    return render(request, 'admin/admin_edit.html', context={
+        'path1': 'Админы', 'path2': 'Изменить',
+        'er': request.GET.get('er', '0'), 'edit': 1,
+        'phone': admin.phone, 'name': admin.name, 'freeze': int(admin.freeze)})
 
 
 @admin_session_check
@@ -134,7 +111,6 @@ def admin_admin_edit_post(request, user_id):
     return redirect('../..')
 
 
-
 @admin_session_check
 def admin_admin_delete(request, user_id):
     admin = Admin.objects.filter(id=user_id)
@@ -145,7 +121,6 @@ def admin_admin_delete(request, user_id):
 
 urlpatterns = [
     path('', admin_admin_index),
-    path('post/', admin_admin_index_post),
     path('add/', admin_admin_create),
     path('add/post/', admin_admin_create_post),
     path('<int:user_id>/', admin_admin_edit),

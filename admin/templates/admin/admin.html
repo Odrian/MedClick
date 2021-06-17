@@ -1,134 +1,52 @@
 {% extends "./base.html" %}
 
 {% block content %}
-<script>
-function filter(type, value) {
-  var li = document.getElementById(type).getElementsByTagName("*");
-  for (var i = 0; i < li.length; i++) {
-    if (i == value) {
-      li[i].classList.add('selected');
-    } else {
-      li[i].classList.remove('selected');
-    }
-  }
-  if (type == 'is_freeze') {
-    filter_freeze(value)
-  }
-}
-
-function filter_freeze(value) {
-  if (value == 1) {
-    value = true;
-  } else if (value == 2) {
-    value = false;
-  }
-  var tr = document.getElementById("tbody").getElementsByTagName('tr');
-  for (var i = 0; i < tr.length; i++) {
-    if (value == 0 || value == tr[i].getElementsByClassName("freeze")[0].hasAttribute('yes.svg')) {
-      tr[i].classList.remove("none-display-freeze");
-    } else {
-      tr[i].classList.add("none-display-freeze");
-    }
-  }
-}
-
-function filter_clear() {
-  filter_freeze(0);
-}
-</script>
-<style>
-.none-display-freeze {
-    display: none;
-}
-</style>
-
 <div id="content" class="">
-    <h1>Выберете админа для изменения</h1>
-    <div id="content-main">
-        <ul class="object-tools">
-        <li>
-            <a href="/admin/admin/add/" class="addlink">Добавить Админа</a>
-        </li>
-        </ul>
-        <div class="module filtered" id="changelist">
-            <div class="changelist-form-container">
-                <div id="toolbar"><form id="changelist-search" method="get">
-                    <div>
-                        <label for="searchbar"><img src="/static/admin/img/search.svg" alt="Поиск"></label>
-                        <input type="text" size="40" name="q" onkeyup="search()" id="searchbar" autofocus>
-                        <input type="submit" value="Искать">
-                    </div>
-                </form></div>
-                <form id="changelist-form" method="post" action="post/" novalidate>
-                    {% csrf_token %}
-                    <div class="actions">
-                        <label>Действие: <select name="action" required>
-                            <option value="" selected></option>
-                            <option value="delete">Удалить выбраных админов</option>
-                            <option value="freeze">Заморозить</option>
-                            <option value="unfreeze">Разморозить</option>
-                        </select></label>
-                        <span class="action-counter" data-actions-icnt="{{ length }}">0 из {{ length }} выбрано</span>
-                    </div>
-                    <div class="results">
-                        <table id="result_list">
-                            <thead>
-                            <tr>
-                                <th scope="col" class="action-checkbox-column">
-                                    <div class="text"><span><input type="checkbox" id="action-toggle"></span></div>
-                                    <div class="clear"></div>
-                                </th>
-                                <th scope="col" class="sortable column-phone">
-                                    <div class="text">Телефон</div>
-                                    <div class="clear"></div>
-                                </th>
-                                <th scope="col" class="sortable column-name">
-                                    <div class="text">ФИО</div>
-                                    <div class="clear"></div>
-                                </th>
-                                <th scope="col" class="sortable column-freeze">
-                                    <div class="text">Заморожен?</div>
-                                    <div class="clear"></div>
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody id="tbody">
-                            {% for admin in admins %}
-                                <tr>
-                                    <td class="action-checkbox">
-                                        <input type="checkbox" name="_selected_action" value="{{ admin.id }}" class="action-select">
-                                    </td>
-                                    <th class="phone"><a href="/admin/admin/{{ admin.id }}/">{{ admin.phone }}</a></th>
-                                    <td class="name">{{ admin.name }}</td>
-                                    <td class="freeze">
-                                        {% if admin.freeze %}
-                                        <img src="/static/admin/img/icon-yes.svg" alt="да" value="да">
-                                        {% else %}
-                                        <img src="/static/admin/img/icon-no.svg" alt="нет" value="нет">
-                                        {% endif %}
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                    <p class="paginator">{{ length }} Админов</p>
-                </form>
+<!--    <h1>Выберете админа для изменения</h1>
+    <ul class="object-tools"><li><a href="/admin/admin/add/" class="addlink">Добавить Админа</a></li></ul> -->
+    <div class="module filtered" id="changelist">
+        <div class="changelist-form-container">
+            <div id="toolbar">
+                <div id="changelist-search">
+                    <label for="searchbar"><img src="/static/admin/img/search.svg" alt="Поиск"></label>
+                    <input type="text" size="40" name="q" onkeyup="search()" id="searchbar" autofocus>
+                </div>
             </div>
-            <div id="changelist-filter">
-                <h2>Фильтры</h2>
-                {% if '' == '' %}
-                <h3 id="changelist-filter-clear">
-                    <li onclick="filter('is_freeze', 0)">✖ Очистить фильтры</a>
-                </h3>
-                {% endif %}
-                <h3> По активности </h3>
-                <ul id="is_freeze">
-                    <li class="selected" onclick="filter('is_freeze', 0)">Любой</li>
-                    <li class="" onclick="filter('is_freeze', 1)">Заморожен</li>
-                    <li class="" onclick="filter('is_freeze', 2)">Не заморожен</li>
-                </ul>
-            </div>
+            <table id="result_list">
+                <thead><tr>
+                    <th scope="col"><div class="text">Телефон</div></th>
+                    <th scope="col"><div class="text">ФИО</div></th>
+                    <th scope="col"><div class="text">Заморожен?</div></th>
+                </tr></thead>
+                <tbody class="filter" id="tbody">
+                {% for admin in admins %}
+                    <tr class="">
+                        <th class="phone"><a href="/admin/admin/{{ admin.id }}/">{{ admin.phone }}</a></th>
+                        <td class="name">{{ admin.name }}</td>
+                        <td class="freeze">
+                            {% if admin.freeze %}
+                            <img class="yeees" src="/static/admin/img/icon-yes.svg" alt="да">
+                            {% else %}
+                            <img src="/static/admin/img/icon-no.svg" alt="нет">
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <p class="paginator">{{ length }} Админов</p>
+        </div>
+        <div id="changelist-filter">
+            <h2>Фильтры</h2>
+            {% if '' == '' %}
+            <h3 id="changelist-filter-clear"><a onclick="filter('is_freeze', 0)">✖ Очистить фильтры</a></h3>
+            {% endif %}
+            <h3> По активности </h3>
+            <ul id="is_freeze">
+                <li class="selected" onclick="filter('is_freeze', 0)">Любой</li>
+                <li class="" onclick="filter('is_freeze', 1)">Заморожен</li>
+                <li class="" onclick="filter('is_freeze', 2)">Не заморожен</li>
+            </ul>
         </div>
     </div>
     <br class="clear">

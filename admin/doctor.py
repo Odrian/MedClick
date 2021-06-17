@@ -8,24 +8,10 @@ from doctor.models import Doctor
 
 @admin_session_check
 def index(request):
-    return render(request, 'admin/base.html', context={'name': 'Доктора'})
-
-
-def admin_create_doctor(request):
-    pass
-
-
-def admin_edit_doctor(request):
-    pass
-
-
-def admin_delete_doctor(request):
-    pass
+    return render(request, 'admin/base.html', context={
+        'path1': 'Доктора', 'doctors': [], 'length': len([])})
 
 
 urlpatterns = [
     path('', index),
-    path('create/', admin_create_doctor),
-    path('edit/', admin_edit_doctor),
-    path('delete/', admin_delete_doctor),
 ]

@@ -27,29 +27,12 @@
     <script src="/static/admin/js/urlify.js"></script>
     <script src="/static/admin/js/prepopulate.js"></script>
 
-    <script>
-function search() {
-  var filter, tr, phone, name, i;
-  filter = document.getElementById('searchbar').value.toLowerCase();
-  tr = document.getElementById("tbody").getElementsByTagName('tr');
-  for (i = 0; i < tr.length; i++) {
-    phone = tr[i].getElementsByClassName("phone")[0].firstChild.textContent;
-    name = tr[i].getElementsByClassName("name")[0].textContent.toLowerCase();
-    if (phone.indexOf(filter) > -1 || name.indexOf(filter) > -1) {
-      tr[i].style.display = "";
-    } else {
-      tr[i].style.display = "none";
-    }
-  }
-}
-    </script>
+    <script src="/static/admin/js/adrian.js"></script>
 
     <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
     <meta name="robots" content="NONE,NOARCHIVE">
 </head>
-
-
 <body class="change-list" data-admin-utc-offset="0">
 <div id="container">
     <div id="header">
@@ -66,37 +49,37 @@ function search() {
     </div>
 
     <div class="breadcrumbs">
-        <a href="/admin/">Home</a>
-        {% if path %} &rsaquo; {{ path }}{% endif %}
+        <a href="/admin/">Панель админа</a>
+        {% if path1 %} &rsaquo; <a href="{% if path2 %}..{% endif %}">{{ path1 }}</a>{% endif %}
+        {% if path2 %} &rsaquo; <a href="">{{ path2 }}</a>{% endif %}
+        <a href="/chat/help" target="_blank" style="float: right;">Нужна помошь?</a>
     </div>
     <div class="main shifted" id="main">
         <button class="sticky toggle-nav-sidebar" id="toggle-nav-sidebar" aria-label="Toggle navigation"></button>
         <nav class="sticky" id="nav-sidebar">
             <div class="app-auth module current-app">
                 <table>
-                    <caption>
-                        <a href="/admin/" class="section" >Больница №1</a>
-                    </caption>
-                    <tr class="{% if path == 'Доктора' %}current-model{% endif %}">
-                      <th scope="row"><a href="/admin/doctor/" aria-current="page">Доктора</a></th>
-                      <td><a href="/admin/doctor/add/" class="addlink">Добавить</a></td>
-                    </tr>
-                    <tr class="{% if path == 'Специализации' %}current-model{% endif %}">
-                        <th scope="row"><a href="/admin/special/">Специализации</a></th>
-                        <td><a href="/admin/special/add/" class="addlink">Добавить</a></td>
-                    </tr>
-                    <tr class="{% if path == 'Админы' %}current-model{% endif %}">
-                        <th scope="row"><a href="/admin/admin/">Админы</a></th>
-                        <td><a href="/admin/admin/add/" class="addlink">Добавить</a></td>
-                    </tr>
+                    <caption><a href="/admin/" class="section" >Больница №1</a></caption>
+                    <tbody class="colored">
+                        <tr class="{% if path1 == 'Доктора' %}current-model{% endif %}">
+                          <th scope="row"><a href="/admin/doctor/" aria-current="page">Доктора</a></th>
+                          <td><a href="/admin/doctor/add/" class="addlink">Добавить</a></td>
+                        </tr>
+                        <tr class="{% if path1 == 'Специализации' %}current-model{% endif %}">
+                            <th scope="row"><a href="/admin/special/">Специализации</a></th>
+                            <td><a href="/admin/special/add/" class="addlink">Добавить</a></td>
+                        </tr>
+                        <tr class="{% if path1 == 'Админы' %}current-model{% endif %}">
+                            <th scope="row"><a href="/admin/admin/">Админы</a></th>
+                            <td><a href="/admin/admin/add/" class="addlink">Добавить</a></td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
         </nav>
         <div class="content">
-            {% block content %}
-
-            {% endblock %}
-            <div id="footer"></div>
+            {% block content %}{% endblock %}
+            <div style="clear: both;padding: 10px;"></div>
         </div>
     </div>
 </div>

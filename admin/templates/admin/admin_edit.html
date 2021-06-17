@@ -21,7 +21,7 @@
                         {% if er == '2' %}<div class="error help">Введите ФИО</div>{% endif %}
                     </div>
                     <div class="form-row">
-                        <input type="checkbox" name="freeze" id="freeze"{% if freeze == 'True' %} checked{% endif %}>
+                        <input type="checkbox" name="freeze" id="freeze"{% if freeze == 1 %} checked{% endif %}>
                         <label class="vCheckboxLabel" for="freeze">Заморожен</label>
                         <div class="help">Если пользователь заморожен, он не сможен ничего делать</div>
                     </div>
