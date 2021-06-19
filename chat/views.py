@@ -11,6 +11,7 @@ from user.models import User
 def null_chat(request):
     return render(request, 'chat/chat.html', context={})
 
+
 @session_check
 def chat_view(request, chat_id):
     user = User.objects.get(phone=request.session.get('phone'))
@@ -18,8 +19,10 @@ def chat_view(request, chat_id):
         return redirect(reverse('chat.main'))
     return render(request, 'chat/chat.html', context={'chat': get_chat(chat_id)})
 
+
 def chat_help(request):
     return chat_view(request, 'adrian_id')
+
 
 urlpatterns = [
     path('', null_chat, name='chat.main'),

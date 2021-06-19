@@ -6,7 +6,7 @@ from index.views import index
 
 urlpatterns = [
     path('', index),
-    path('auth/', include('user.urls')),
+    path('auth/', include('user.views')),
     path('chat/', include('chat.views')),
     path('api/', include('api.urls')),
     path('admin/', include('admin.urls')),
