@@ -1,54 +1,51 @@
 {% extends "./base.html" %}
 
 {% block content %}
-<div id="content" class="">
-<!--    <h1>Выберете админа для изменения</h1>
-    <ul class="object-tools"><li><a href="/admin/admin/add/" class="addlink">Добавить Админа</a></li></ul> -->
-    <div class="module filtered" id="changelist">
-        <div class="changelist-form-container">
-            <div id="toolbar">
-                <div id="changelist-search">
-                    <label for="searchbar"><img src="/static/admin/img/search.svg" alt="Поиск"></label>
-                    <input type="text" size="40" name="q" onkeyup="search()" id="searchbar" autofocus>
-                </div>
+<!--<h1>Выберете админа для изменения</h1>
+<ul class="object-tools"><li><a href="/admin/admin/add/" class="addlink">Добавить Админа</a></li></ul> -->
+<div class="module filtered" id="changelist">
+    <div class="changelist-form-container">
+        <div id="toolbar">
+            <div id="changelist-search">
+                <label for="searchbar"><img src="/static/admin/img/search.svg" alt="Поиск"></label>
+                <input type="text" size="40" name="q" onkeyup="search()" id="searchbar" autofocus>
             </div>
-            <table id="result_list">
-                <thead><tr>
-                    <th scope="col"><div class="text">Телефон</div></th>
-                    <th scope="col"><div class="text">ФИО</div></th>
-                    <th scope="col"><div class="text">Заморожен?</div></th>
-                </tr></thead>
-                <tbody class="filter" id="tbody">
-                {% for admin in admins %}
-                    <tr class="">
-                        <th class="phone"><a href="/admin/admin/{{ admin.id }}/">{{ admin.phone }}</a></th>
-                        <td class="name">{{ admin.name }}</td>
-                        <td class="freeze">
-                            {% if admin.freeze %}
-                            <img class="yeees" src="/static/admin/img/icon-yes.svg" alt="да">
-                            {% else %}
-                            <img src="/static/admin/img/icon-no.svg" alt="нет">
-                            {% endif %}
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-            <p class="paginator">{{ length }} Админов</p>
         </div>
-        <div id="changelist-filter">
-            <h2>Фильтры</h2>
-            {% if '' == '' %}
-            <h3 id="changelist-filter-clear"><a onclick="filter('is_freeze', 0)">✖ Очистить фильтры</a></h3>
-            {% endif %}
-            <h3> По активности </h3>
-            <ul id="is_freeze">
-                <li class="selected" onclick="filter('is_freeze', 0)">Любой</li>
-                <li class="" onclick="filter('is_freeze', 1)">Заморожен</li>
-                <li class="" onclick="filter('is_freeze', 2)">Не заморожен</li>
-            </ul>
-        </div>
+        <table id="result_list">
+            <thead><tr>
+                <th scope="col"><div class="text">Телефон</div></th>
+                <th scope="col"><div class="text">ФИО</div></th>
+                <th scope="col"><div class="text">Заморожен?</div></th>
+            </tr></thead>
+            <tbody class="filter" id="tbody">
+            {% for admin in admins %}
+                <tr class="">
+                    <th class="phone"><a href="/admin/admin/{{ admin.id }}/">{{ admin.phone }}</a></th>
+                    <td class="name">{{ admin.name }}</td>
+                    <td class="freeze">
+                        {% if admin.freeze %}
+                        <img class="yeees" src="/static/admin/img/icon-yes.svg" alt="да">
+                        {% else %}
+                        <img src="/static/admin/img/icon-no.svg" alt="нет">
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <p class="paginator">{{ length }} Админов</p>
     </div>
-    <br class="clear">
+    <div id="changelist-filter">
+        <h2>Фильтры</h2>
+        {% if '' == '' %}
+        <h3 id="changelist-filter-clear"><a onclick="filter('is_freeze', 0)">✖ Очистить фильтры</a></h3>
+        {% endif %}
+        <h3> По активности </h3>
+        <ul id="is_freeze">
+            <li class="selected" onclick="filter('is_freeze', 0)">Любой</li>
+            <li class="" onclick="filter('is_freeze', 1)">Заморожен</li>
+            <li class="" onclick="filter('is_freeze', 2)">Не заморожен</li>
+        </ul>
+    </div>
 </div>
 {% endblock %}
