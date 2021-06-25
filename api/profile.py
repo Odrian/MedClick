@@ -13,7 +13,7 @@ from .decorators import session_check
 
 @api_view(['POST'])
 @session_check
-def api_all_jops(request, phone):
+def api_all_jobs(request, phone):
     data = list(map(lambda x: [x.pk, x.name], Specialization.objects.all()))
     data2 = {}
     for i in data:
@@ -26,9 +26,9 @@ def api_all_jops(request, phone):
 def api_all_doctors(request, phone):
     data = Doctor.objects.all()
 
-    jop = request.POST.get('jop')
-    if jop:
-        jobs = Specialization.objects.filter(name=jop)
+    job = request.POST.get('job')
+    if job:
+        jobs = Specialization.objects.filter(name=job)
         if not jobs:
             data = data.filter(specifications__in=[int(jobs[0])])
 
@@ -131,7 +131,7 @@ def api_edit_self(request, phone):
     return JsonResponse({'info': 'all_ok'})
 
 urlpatterns = [
-    path('get_jops/', api_all_jops),
+    path('get_jobs/', api_all_jobs),
     path('get_doctors/', api_all_doctors),
     path('<int:doctor_id>/', api_get_doctor_info),
     path('self/', api_get_self),
