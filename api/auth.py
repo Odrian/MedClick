@@ -16,8 +16,7 @@ from user.models import Register
 @api_view(['POST'])
 def api_phone(request):
     resp = logic_phone(request.method, request.POST.get('phone'))
-    return HttpResponse(resp[0])
-    #return JsonResponse({'info':resp[0]})
+    return JsonResponse({'info':resp[0]})
 
 
 @api_view(['POST'])
