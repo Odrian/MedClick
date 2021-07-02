@@ -110,17 +110,28 @@ USE_TZ = True
 LOGFILE = os.path.join(BASE_DIR, 'log.txt')
 LOGGING = {
     'version': 1,
+    'formatters': {
+        'simple': {
+            'format': '%(levelname)s %(asctime)s %(message)s'
+        },
+    },
     'disable_existing_loggers': False,
     'handlers': {
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple',
+        },
         'file': {
             'level': 'INFO',
             'class': 'logging.FileHandler',
             'filename': LOGFILE,
+            'formatter': 'simple',
         },
     },
     'loggers': {
         'django': {
-            'handlers': ['file'],
+            'handlers': ['console'],#, 'file'],
             'level': 'INFO',
             'propagate': True,
         },
