@@ -16,14 +16,14 @@ from user.models import Register
 @api_view(['POST'])
 def api_phone(request):
     resp = logic_phone(request.method, request.POST.get('phone'))
-    return JsonResponse({'info':resp[0], 'path':resp[1]})
+    return JsonResponse({'info':resp[0]})
 
 
 @api_view(['POST'])
 def api_code(request):
     phone = request.POST.get('phone')
     resp = logic_code(request.method, phone, request.POST.get('code'))
-    ans = {'info':resp[0], 'path':resp[1], 'session_key': ''}
+    ans = {'info':resp[0], 'session_key': ''}
     if resp[0] == 'all_ok':
         if resp[1] == 'chat.main':
             ans['session_key'] = generate_uuid(phone)
