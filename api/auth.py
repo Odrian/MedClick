@@ -4,7 +4,7 @@ from uuid import UUID
 
 from django.utils.timezone import now
 from django.urls import path
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from rest_framework.decorators import api_view
 
 from logic.auth import logic_phone, logic_code, logic_register
@@ -16,7 +16,8 @@ from user.models import Register
 @api_view(['POST'])
 def api_phone(request):
     resp = logic_phone(request.method, request.POST.get('phone'))
-    return JsonResponse({'info':resp[0]})
+    return HttpResponse(resp[0])
+    #return JsonResponse({'info':resp[0]})
 
 
 @api_view(['POST'])
