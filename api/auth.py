@@ -12,11 +12,14 @@ from logic.auth import logic_phone, logic_code, logic_register
 from .models import Session
 from user.models import Register
 
+from .decorators import convert_input
 
 @api_view(['POST'])
-def api_phone(request):
-    resp = logic_phone(request.method, request.POST.get('phone'))
-    return JsonResponse({'info':resp[0]})
+@convert_input
+def api_phone(request, post):
+    resp = logic_phone(request.method, post.get('phone'))
+    return HttpResponse(resp[0])
+    #return JsonResponse({'info':resp[0]})
 
 
 @api_view(['POST'])
