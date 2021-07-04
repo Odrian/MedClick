@@ -23,9 +23,10 @@ def api_phone(request, post):
 
 
 @api_view(['POST'])
-def api_code(request):
-    phone = request.POST.get('phone')
-    resp = logic_code(request.method, phone, request.POST.get('code'))
+@convert_input
+def api_code(request, post):
+    phone = post.get('phone')
+    resp = logic_code(request.method, phone, post.get('code'))
     ans = {'info':resp[0], 'session_key': ''}
     if resp[0] == 'all_ok':
         if resp[1] == 'chat.main':
@@ -41,8 +42,9 @@ def api_code(request):
 
 
 @api_view(['POST'])
-def api_register(request):
-    phone = request.POST.get('phone')
+@convert_input
+def api_register(request, post):
+    phone = post.get('phone')
     reg = Register.objects.filter(phone=phone)
     if len(reg) == 0:
         reg = None

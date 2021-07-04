@@ -23,7 +23,7 @@ def convert_input(func):
         for x in data:
             x = x.replace('%98', '&').split('=')
             if len(x) != 2:
-                return
+                return func(*args, post={}, **kwargs)
             data2[x[0].replace('%99', '=')] = x[1].replace('%99', '=')
         return func(*args, post=data2, **kwargs)
     return wrapper
