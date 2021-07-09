@@ -4,7 +4,7 @@ from uuid import UUID
 
 from django.utils.timezone import now
 from django.urls import path
-from django.http import JsonResponse, HttpResponse
+from django.http import HttpResponse
 from rest_framework.decorators import api_view
 
 from logic.auth import logic_phone, logic_code, logic_register
@@ -14,12 +14,12 @@ from user.models import Register
 
 from .decorators import convert_input
 
+
 @api_view(['POST'])
 @convert_input
 def api_phone(request, post):
     resp = logic_phone(request.method, post.get('phone'))
     return HttpResponse(resp[0])
-    #return JsonResponse({'info':resp[0]})
 
 
 @api_view(['POST'])
@@ -38,7 +38,7 @@ def api_code(request, post):
                 reg.save()
             else:
                 reg[0].time = now()
-    return JsonResponse(ans)
+    return HttpResponse(ans)
 
 
 @api_view(['POST'])
@@ -57,7 +57,7 @@ def api_register(request, post):
     if resp[0] == 'all_ok':
         ans['session_key'] = generate_uuid(phone)
         reg.delete()
-    return JsonResponse(ans)
+    return HttpResponse(ans)
 
 
 def generate_uuid(phone):

@@ -16,6 +16,7 @@ def session_check(func):
         return func(*args, phone=session.phone, **kwargs)
     return wrapper
 
+
 def convert_input(func):
     def wrapper(*args, **kwargs):
         data = str(args[0].body).split('&')
